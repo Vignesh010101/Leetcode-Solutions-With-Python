@@ -1,10 +1,9 @@
 # Write your MySQL query statement below
-WITH
-  UniqueNumbers AS (
+SELECT MAX(num) AS num
+FROM Mynumbers
+WHERE num IN (
     SELECT num
     FROM MyNumbers
-    GROUP BY 1
-    HAVING COUNT(num) = 1
-  )
-SELECT MAX(num) AS num
-FROM UniqueNumbers;
+    GROUP BY num
+    HAVING COUNT(*) = 1
+);
