@@ -1,12 +1,15 @@
 class Solution:
-  def generate(self, numRows: int) -> List[List[int]]:
-    ans = []
-
-    for i in range(numRows):
-      ans.append([1] * (i + 1))
-
-    for i in range(2, numRows):
-      for j in range(1, len(ans[i]) - 1):
-        ans[i][j] = ans[i - 1][j - 1] + ans[i - 1][j]
-
-    return ans
+    def generate(self, numRows: int) -> List[List[int]]:
+        if numRows == 0:
+            return []
+        if numRows == 1:
+            return [[1]]
+        
+        prevRows = self.generate(numRows - 1)
+        newRow = [1] * numRows
+        
+        for i in range(1, numRows - 1):
+            newRow[i] = prevRows[-1][i - 1] + prevRows[-1][i]
+        
+        prevRows.append(newRow)
+        return prevRows
