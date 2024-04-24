@@ -11,7 +11,7 @@ class Solution:
                 return dp[n]
             dp[n]=fib(n-1)+fib(n-2)+fib(n-3)
             return dp[n]
-
+        
         dp=[-1]*(n+1)
-        a=fib(n)
-        return(a)
+        v=fib(n)
+        return v
