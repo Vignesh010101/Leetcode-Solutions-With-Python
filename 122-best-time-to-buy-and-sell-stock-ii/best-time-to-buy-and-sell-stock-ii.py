@@ -3,8 +3,8 @@ class Solution:
         sell=0
         hold=-math.inf
 
-        for price in prices:
-            sell=max(sell, hold+price)
-            hold=max(hold, sell-price)
-
-        return sell   
+        for prc in prices:
+            sell=max(sell,hold+prc)
+            hold=max(hold,sell-prc)
+        
+        return sell
