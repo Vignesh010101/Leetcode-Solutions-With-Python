@@ -1,46 +1,6 @@
 class Solution:
     def findRelativeRanks(self, score: List[int]) -> List[str]:
-        import copy
-        w = copy.deepcopy(score)
-        l=[]
-        m = 0
-        if(len(score)==1):
-            c = max(score)
-            for i in range(len(w)):
-                if(w[i]==c):
-                    w[i] = 'Gold Medal'
-            return w
-        elif(len(score)==2):
-            c = max(score)
-            for i in range(len(w)):
-                if(w[i]==c):
-                    w[i] = 'Gold Medal'
-            score.remove(c)    
-            c = max(score)
-            for i in range(len(w)):
-                if(w[i]==c):
-                    w[i]= 'Silver Medal'
-            c = max(score) 
-            return w
-        else:
-            c = max(score)
-            for i in range(len(w)):
-                if(w[i]==c):
-                    w[i] = 'Gold Medal'
-            score.remove(c)    
-            c = max(score)
-            for i in range(len(w)):
-                if(w[i]==c):
-                    w[i]= 'Silver Medal'
-            score.remove(c)    
-            c = max(score)
-            for i in range(len(w)):
-                if(w[i]==c):
-                    w[i]='Bronze Medal'
-            score.remove(c)
-            u = sorted([i for i in w if type(i)==int],reverse = True)
-            for i in range(len(w)):
-                if type(w[i])==int:
-                    r = u.index(w[i])+4
-                    w[i] = str(r)
-            return w
+        sorted_score = sorted(score, reverse=True)
+        medals = ["Gold Medal", "Silver Medal", "Bronze Medal"]
+        rank_mapping = {score: medals[i] if i < 3 else str(i + 1) for i, score in enumerate(sorted_score)}
+        return [rank_mapping[score] for score in score]
