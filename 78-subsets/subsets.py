@@ -1,12 +1,10 @@
 class Solution:
-  def subsets(self, nums: List[int]) -> List[List[int]]:
-    ans = []
-
-    def dfs(s: int, path: List[int]) -> None:
-      ans.append(path)
-
-      for i in range(s, len(nums)):
-        dfs(i + 1, path + [nums[i]])
-
-    dfs(0, [])
-    return ans
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        def backtracking(start, route):
+            result_list.append(route)
+            for i in range(start, len(nums)):
+                backtracking(i+1, route + [nums[i]])
+            
+        result_list=[]
+        backtracking(0,[])
+        return result_list
