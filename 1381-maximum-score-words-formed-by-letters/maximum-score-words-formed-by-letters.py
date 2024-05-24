@@ -1,29 +1,32 @@
 class Solution:
-  def maxScoreWords(self, words: List[str], letters: List[chr], score: List[int]) -> int:
-    count = collections.Counter(letters)
+    def maxScoreWords(
+        self, words: List[str], letters: List[str], score: List[int]
+    ) -> int:
+        lettersCounter = Counter(letters)
+        totalScore = 0
 
-    def useWord(i: int) -> int:
-      isValid = True
-      earned = 0
-      for c in words[i]:
-        count[c] -= 1
-        if count[c] < 0:
-          isValid = False
-        earned += score[ord(c) - ord('a')]
-      return earned if isValid else -1
+        def explore(index, letterCounter, currScore):
+            nonlocal totalScore
 
-    def unuseWord(i: int) -> None:
-      for c in words[i]:
-        count[c] += 1
+            totalScore = max(totalScore, currScore)
+            if index == len(words):
+                return
 
-    def dfs(s: int) -> int:
-      """Returns the maximum score you can get from words[s..n)."""
-      ans = 0
-      for i in range(s, len(words)):
-        earned = useWord(i)
-        if earned > 0:
-          ans = max(ans, earned + dfs(i + 1))
-        unuseWord(i)
-      return ans
+            for i in range(index, len(words)):
+                tmpCounter = copy.deepcopy(letterCounter)
+                word = words[i]
+                wordScore = 0
+                isValid = True
 
-    return dfs(0)
+                for ch in word:
+                    if ch in tmpCounter and tmpCounter[ch] > 0:
+                        tmpCounter[ch] -= 1
+                        wordScore += score[ord(ch) - ord("a")]
+                    else:
+                        isValid = False
+                        break
+                if isValid:
+                    explore(i + 1, tmpCounter, currScore + wordScore)
+
+        explore(0, lettersCounter, 0)
+        return totalScore
