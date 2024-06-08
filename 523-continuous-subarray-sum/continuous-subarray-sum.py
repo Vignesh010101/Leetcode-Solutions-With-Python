@@ -1,11 +1,13 @@
 class Solution:
     def checkSubarraySum(self, nums: List[int], k: int) -> bool:
-        s, prev_d, set_d = 0, 0, set()
+        s=0
+        prefix=0
+        setd=set()
         for num in nums:
-            s += num
-            d = s%k
-            if d in set_d:
+            s+=num
+            d= s % k
+            if d in setd:
                 return True
-            set_d.add(prev_d)
-            prev_d = d
-        return False    
+            setd.add(prefix)
+            prefix=d
+        return False
